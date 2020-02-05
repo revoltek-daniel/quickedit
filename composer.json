@@ -1,0 +1,19 @@
+{
+  "name": "punktde/quickedit",
+  "description": "This extension allows to define quick edit buttons for page property fields.",
+  "type": "typo3-cms-extension",
+  "keywords": ["TYPO3 CMS", "Pages", "Quickedit", "Toolbar"],
+  "homepage": "",
+  "license": "GPL-2.0+",
+  "support": {
+    "issues": ""
+  },
+  "require": {
+    "typo3/cms-core": "^9.5 || ^10.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "PunktDe\\Quickedit\\": "Classes/"
+    }
+  }
+}

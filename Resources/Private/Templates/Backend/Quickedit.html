@@ -1,0 +1,29 @@
+{namespace qick=PunktDe\Quickedit\ViewHelpers}
+
+<f:if condition="{config}">
+    <f:render partial="QuickeditHeader" />
+
+    <div class="quickedit__container {f:if(condition: isVisible, then: 'collapse in', else: 'collapse')}" id="quick-edit" data-page="{pageId}">
+        <div class="quickedit__container-inner">
+            <f:for each="{config}" as="editConfig">
+                <div class="quickedit__group">
+                    <div class="quickedit__label">{editConfig.label}</div>
+
+                    <qick:be.editRecord table="pages" uid="{pageId}" fields="{editConfig.fields}" class="quickedit__edit-button btn btn-default">
+                        <core:icon identifier="actions-open" size="default" />
+                    </qick:be.editRecord>
+
+                    <f:if condition="{editConfig.previewFields}">
+                        <div class="quickedit__field-value" data-toggle="tooltip" data-title="
+                        {f:render(partial:'FieldValues', arguments:{editConfig:editConfig})}"
+                             data-html="true" data-placement="bottom">
+                            <f:translate key="LLL:EXT:quickedit/Resources/Private/Language/Backend.xlf:currentValues" />
+                        </div>
+                    </f:if>
+                </div>
+            </f:for>
+        </div>
+    </div>
+
+    <f:render partial="QuickeditToggle" arguments="{_all}"/>
+</f:if>
