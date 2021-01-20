@@ -3,10 +3,10 @@
   "description": "This extension allows to define quick edit buttons for page property fields.",
   "type": "typo3-cms-extension",
   "keywords": ["TYPO3 CMS", "Pages", "Quickedit", "Toolbar"],
-  "homepage": "",
-  "license": "GPL-2.0+",
+  "homepage": "https://github.com/punktDe/quickedit",
+  "license": "GPL-2.0-or-later",
   "support": {
-    "issues": ""
+    "issues": "https://github.com/punktDe/quickedit/issues"
   },
   "require": {
     "typo3/cms-core": "^9.5 || ^10.4"
