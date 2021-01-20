@@ -6,6 +6,12 @@
 Change log
 ==========
 
+Version 0.1.1
+-------------
+
+- Fix composer.json file
+- Update extension state to 'beta' after further testing with TYPO3 9 and 10
+
 Version 0.1.0
 -------------
 
