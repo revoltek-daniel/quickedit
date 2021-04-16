@@ -26,7 +26,7 @@ class PageLayoutHeader
     protected $backendUser;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $pageUid;
 
@@ -35,6 +35,11 @@ class PageLayoutHeader
      */
     protected $pageRecord;
 
+    /**
+     * @var int
+     */
+    protected $language;
+
 
 
     public function __construct()
@@ -42,6 +47,29 @@ class PageLayoutHeader
         $this->backendUser = $GLOBALS['BE_USER'];
         $this->pageUid = (int)GeneralUtility::_GET('id');
         $this->pageRecord = BackendUtility::getRecord('pages', $this->pageUid);
+        $this->language = (int)BackendUtility::getModuleData(['language'], [], 'web_layout')['language'];
+
+        $this->updatePageRecordIfOverlay();
+    }
+
+
+
+    /**
+     *
+     */
+    protected function updatePageRecordIfOverlay(): void
+    {
+        if ($this->language > 0) {
+            $overlayRecords = BackendUtility::getRecordLocalization(
+                'pages',
+                $this->pageUid,
+                $this->language
+            );
+
+            if (is_array($overlayRecords) && array_key_exists(0, $overlayRecords) && is_array($overlayRecords[0])) {
+                $this->pageRecord = $overlayRecords[0];
+            }
+        }
     }
 
 
@@ -60,7 +88,7 @@ class PageLayoutHeader
         $pageRenderer->loadRequireJsModule('TYPO3/CMS/Quickedit/Quickedit');
 
         $standaloneView = $this->initializeStandaloneView();
-        $standaloneView->assign('pageId', $this->pageUid);
+        $standaloneView->assign('pageId', $this->pageRecord['uid']);
         $standaloneView->assign('config', $this->getFieldConfigForPage());
         $standaloneView->assign('isVisible', $this->isVisible());
 
@@ -198,7 +226,8 @@ class PageLayoutHeader
             $fieldsArray = array_map('trim', $fieldsArray);
 
             foreach ($fieldsArray as $index => $field) {
-                if ($this->userHasAccessToField($field) === false) {
+                if ($this->userHasAccessToField($field) === false
+                    || $this->fieldIsAvailableForLanguage($field) === false) {
                     unset($fieldsArray[$index]);
                 }
             }
@@ -218,6 +247,24 @@ class PageLayoutHeader
         return $field !== '' && (!array_key_exists('exclude', $GLOBALS['TCA']['pages']['columns'][$field]) ||
                 $GLOBALS['TCA']['pages']['columns'][$field]['exclude'] === 0 ||
                 $this->backendUser->check('non_exclude_fields', 'pages:' . $field));
+    }
+
+
+
+    /**
+     * @param string $field
+     * @return bool
+     */
+    protected function fieldIsAvailableForLanguage(string $field): bool
+    {
+        if ($this->language > 0) {
+            return $field !== '' && (
+                    !array_key_exists('l10n_mode', $GLOBALS['TCA']['pages']['columns'][$field]) ||
+                    $GLOBALS['TCA']['pages']['columns'][$field]['l10n_mode'] !== 'exclude'
+                );
+        }
+
+        return true;
     }
 
 
@@ -284,8 +331,8 @@ class PageLayoutHeader
 
         if (array_key_exists('quickedit', $this->backendUser->uc) &&
             array_key_exists('visible', $this->backendUser->uc['quickedit']) &&
-            array_key_exists($this->pageUid, $this->backendUser->uc['quickedit']['visible'])) {
-            $isVisible = (bool)$this->backendUser->uc['quickedit']['visible'][$this->pageUid];
+            array_key_exists($this->pageRecord['uid'], $this->backendUser->uc['quickedit']['visible'])) {
+            $isVisible = (bool)$this->backendUser->uc['quickedit']['visible'][$this->pageRecord['uid']];
         }
 
         return $isVisible;

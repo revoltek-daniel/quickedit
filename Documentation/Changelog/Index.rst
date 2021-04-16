@@ -6,6 +6,12 @@
 Change log
 ==========
 
+Version 0.2.0
+-------------
+
+- Add extension key to composer.json file
+- Add support for using toolbar with page translations
+
 Version 0.1.1
 -------------
 
