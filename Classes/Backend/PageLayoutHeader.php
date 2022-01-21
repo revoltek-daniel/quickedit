@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PunktDe\Quickedit\Backend;
 
 /**
- * (c) 2020 https://punkt.de GmbH - Karlsruhe, Germany - https://punkt.de
+ * (c) 2022 https://punkt.de GmbH - Karlsruhe, Germany - https://punkt.de
  * All rights reserved.
  */
 
