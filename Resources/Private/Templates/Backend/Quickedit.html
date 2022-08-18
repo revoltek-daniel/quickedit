@@ -3,7 +3,7 @@
 <f:if condition="{config}">
     <f:render partial="QuickeditHeader" />
 
-    <div class="quickedit__container {f:if(condition: isVisible, then: 'collapse in', else: 'collapse')}" id="quick-edit" data-page="{pageId}">
+    <div class="quickedit__container {f:if(condition: isVisible, then: 'collapse show', else: 'collapse')}" id="quick-edit" data-page="{pageId}">
         <div class="quickedit__container-inner">
             <f:for each="{config}" as="editConfig">
                 <div class="quickedit__group">
