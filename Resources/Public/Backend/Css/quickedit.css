@@ -15,7 +15,7 @@
 }
 
 .quickedit__label {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .quickedit__edit-button {
@@ -28,7 +28,7 @@
 .quickedit__header {
     padding: 1rem;
     background-color: #eee;
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 
 .quickedit__toggle-container {
